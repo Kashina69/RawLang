@@ -1,4 +1,4 @@
-language should be javascript
+language should be python
 Print hello world end
 print heLLo world end
 print hello worlD end

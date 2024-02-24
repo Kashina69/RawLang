@@ -33,22 +33,18 @@ def check_file_extension(language):
     if language == "javascript": return "js"
     if language == "golang": return "go"
     if language == "rust": return "rs"
-    print("check extension "+language)
 
-def write_in_file(generated_code,file_extension):
-     # Create a directory to store generated code if it doesn't exist
+def write_in_file(generated_code,file_extension,input_filename):
+# Create a directory to store generated code if it doesn't exist
         output_directory = "generated_code"
         if not os.path.exists(output_directory):
             os.makedirs(output_directory)
+# Write in output file
         output_filename = os.path.join(output_directory, input_filename.rstrip('txt') + file_extension)
         with open(output_filename, 'w') as file:
             file.write(generated_code)
 
         print("Code generated successfully and saved in", output_filename)
-
-
-
-
 
 
 
@@ -58,31 +54,19 @@ def main():
         print("Bro atleast give a file to work on")
         return
     input_filename = sys.argv[1]
-
     try:
-        # Read English code from file
         with open(input_filename, 'r') as file:
-
-            # check file content convert it to linst and lowercase it 
-            file_content_lowercase_as_list = [line.strip().lower() for line in file.readlines()]
-            print(file_content_lowercase_as_list)
-            
-            # check first line and set the programming language
-            first_line = file_content_lowercase_as_list[0]
+# check programming language
+            first_line = file.readline()
             language = checkProgrammingLanguage(first_line)
             print("Programming language set to:", language)
-            
-            # read all english code 
+
+# read english code
             english_code = file.read()
-            print(english_code)
-        # Generate code
-        generated_code = code_generator(language, english_code)
-
-        file_extension = check_file_extension(language)
-
-        print("file extension is ")
-        print(file_extension)
-        write_in_file(generated_code, file_extension)
+            generated_code = code_generator(language, english_code)
+            file_extension = check_file_extension(language)
+# write code in file 
+            write_in_file(generated_code, file_extension, input_filename)
 
     except FileNotFoundError:
         print("File not found:", input_filename)

@@ -18,6 +18,6 @@ language should be python
 ```
 
 ## other languages which you can use are 
--javascript
--golang
--rust
+- javascript
+- golang
+- rust

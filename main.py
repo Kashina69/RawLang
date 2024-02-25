@@ -5,45 +5,50 @@ from code_generators.javascript_code_generator import generate_javascript_code
 from code_generators.go_lang_code_generator import generate_golang_code
 from code_generators.rust_code_generator import generate_rust_code
 
-language = ""
-generated_code = ""
-input_filename =""
-file_extension = ""
+
 def checkProgrammingLanguage(first_line):
-    if first_line.split()[0] == "language":
-        if first_line.split()[-1] == "python": return "python"
-        elif first_line.split()[-1] == "javascript": return "javascript"
-        elif first_line.split()[-1] == "golang": return "golang"
-        elif first_line.split()[-1] == "rust": return "rust"
-    else:
-        print("Broo at least tell the language")
-        print("This is how to do it")
-        print("Write:")
-        print("language should be python or javascript or go or rust")
-        print("On the top of the file")
-        
+    words = first_line.lower().split()
+    if words[0] == "language":
+        lang = words[-1]
+        if lang in ["python", "javascript", "golang", "rust"]:
+            return lang
+    print("Broo at least tell the language")
+    print("This is how to do it")
+    print("Write:")
+    print("language should be python or javascript or go or rust")
+    print("On the top of the file")
+    return None
+            
 def code_generator(language, english_code):
-    if language == "python": return generate_python_code(english_code)
-    if language == "javascript": return generate_javascript_code(english_code)
-    if language == "golang": return generate_golang_code(english_code)
-    if language == "rust": return generate_rust_code(english_code)
+    code_generator_dict = {
+        "python": generate_python_code(english_code),
+        "javascript": generate_javascript_code(english_code),
+        "golang": generate_golang_code(english_code),
+        "rust": generate_rust_code(english_code)
+    }
+    return code_generator_dict[language]
     
 def check_file_extension(language):
-    if language == "python": return "py"
-    if language == "javascript": return "js"
-    if language == "golang": return "go"
-    if language == "rust": return "rs"
+    file_extension_dict ={
+        "python": "py",
+        "javascript": "js",
+        "golang": "go",
+        "rust": "rs"
+    }
+    return file_extension_dict[language]
 
 def write_in_file(generated_code,file_extension,input_filename):
 # Create a directory to store generated code if it doesn't exist
         output_directory = "generated_code"
         if not os.path.exists(output_directory):
             os.makedirs(output_directory)
-# Write in output file
-        output_filename = os.path.join(output_directory, input_filename.rstrip('txt') + file_extension)
+
+# Split the input filename and extension
+        filename, _ = os.path.splitext(input_filename)
+# Concatenate the output filename with the proper file extension
+        output_filename = os.path.join(output_directory, filename + "." + file_extension)
         with open(output_filename, 'w') as file:
             file.write(generated_code)
-
         print("Code generated successfully and saved in", output_filename)
 
 
@@ -59,17 +64,20 @@ def main():
 # check programming language
             first_line = file.readline()
             language = checkProgrammingLanguage(first_line)
-            print("Programming language set to:", language)
-
+            if language:
+                print("Programming language set to:", language)
 # read english code
-            english_code = file.read()
-            generated_code = code_generator(language, english_code)
-            file_extension = check_file_extension(language)
+                english_code = file.read()
+                generated_code = code_generator(language, english_code)
+                file_extension = check_file_extension(language)
 # write code in file 
-            write_in_file(generated_code, file_extension, input_filename)
-
+                write_in_file(generated_code, file_extension, input_filename)
+            else:
+                return
     except FileNotFoundError:
         print("File not found:", input_filename)
+    except Exception as e:
+        print("An error occurred:", str(e))
 
 if __name__ == "__main__":
     main()

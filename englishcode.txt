@@ -1,4 +1,4 @@
-language should be python
+Language should be python
 Print hello world end
 print heLLo world end
 print hello worlD end

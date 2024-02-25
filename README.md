@@ -1,7 +1,8 @@
 # RawScript
 RawScript is a user-friendly compiler that translates literally english to any programming language like Python, Javascript, GoLang, Rust code. With RawScript, you can write code using familiar English words and phrases.
 
-### Raw Script because of its Raw and Scripting Nature 
+Raw Script because of its Raw and Scripting Nature 
+
 -----
 You work on making Logic and writing english paragraph and the code is RawScript responsibility noo vim needed for ultimate high productivity.
 

@@ -39,7 +39,7 @@ Must write Language should be languageName on the top of the file
 ```
 
 ## Output in python
-You will get the output in a new generated dir in the RawLang folder name as generated_code and the file name will be the same as the code.txt file name  
+You will get the output in a new generated dir in the RawScript folder name as generated_code and the file name will be the same as the code.txt file name  
 
 ```py
 def add(x, y):
@@ -49,7 +49,7 @@ def add(x, y):
 def print_message(message):
     print(message)
 
-name = "RawLang"
+name = "RawScript"
 age = 2
 
 print("Hello, " + name)
@@ -57,6 +57,7 @@ print("You are", age)
 
 ```
 ## Languages available now 
+- python
 - javascript
 - golang
 - rust

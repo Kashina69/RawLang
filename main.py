@@ -67,7 +67,9 @@ def main():
             if language:
                 print("Programming language set to:", language)
 # read english code
-                english_code = file.read()
+                english_code = [] 
+                for line in file:
+                    english_code.append(line.strip())
                 generated_code = code_generator(language, english_code)
                 file_extension = check_file_extension(language)
 # write code in file 

@@ -1,9 +1,9 @@
 import sys
 import os
-from code_generators.python_code_generator import generate_python_code
-from code_generators.javascript_code_generator import generate_javascript_code
-from code_generators.go_lang_code_generator import generate_golang_code
-from code_generators.rust_code_generator import generate_rust_code
+from code_generators.python.python_code_generator import generate_python_code
+from code_generators.javascript.javascript_code_generator import generate_javascript_code
+from code_generators.go_lang.go_lang_code_generator import generate_golang_code
+from code_generators.rust.rust_code_generator import generate_rust_code
 
 
 def checkProgrammingLanguage(first_line):
@@ -67,9 +67,7 @@ def main():
             if language:
                 print("Programming language set to:", language)
 # read english code
-                english_code = [] 
-                for line in file:
-                    english_code.append(line.strip())
+                english_code = file.read()
                 generated_code = code_generator(language, english_code)
                 file_extension = check_file_extension(language)
 # write code in file 

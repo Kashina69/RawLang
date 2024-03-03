@@ -61,9 +61,11 @@ age = 2
 print_message(name, age)
 calculate(2, 3, 4)
 
+
+```
 ## Language syntax and keywords
 [Docs](https://github.com/Kashina69/RawScript/blob/main/Syntax%20and%20keywords.md)
-```
+
 ## Languages available now 
 - javascript
 - golang

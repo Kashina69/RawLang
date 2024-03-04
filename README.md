@@ -67,9 +67,10 @@ calculate(2, 3, 4)
 [Docs](https://github.com/Kashina69/RawScript/blob/main/Syntax%20and%20keywords.md)
 
 ## Languages available now 
-- javascript
-- golang
-- rust
+- Python
+- Javascript
+- Golang
+- Rust
 
 ## Contributing
 Contributions are welcome! Feel free to submit bug reports, feature requests, or pull requests to help RawScript improve.

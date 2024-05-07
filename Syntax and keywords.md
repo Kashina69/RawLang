@@ -1,4 +1,4 @@
-# RawScript 
+# RawLang 
 
 ### Use . go out of the function or loop or condition scope 
 ### For next line just use next line 
@@ -36,17 +36,17 @@ assign outputVariableName to variableName
 
 ## List or Array
 ``` python
-make list listName with values 10,15,20,30 and 35 . 
-make list listName = 10,15,20,30 and 35 .
+make (list or array or arr or lst) listName with values 10,15,20,30 and 35 . 
+make (list or array or arr or lst) listName = 10,15,20,30 and 35 .
 ```
 
 ## Dictionary or Object
 
 ``` python
-make dictionary dictionaryName with values key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
-make dictionary dictionaryName with values [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
-make dictionary dictionaryName = key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
-make dictionary dictionaryName = [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
+make (dictionary or dict or object or obj  ) dictionaryName with values key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
+make (dictionary or dict or object or obj  ) dictionaryName with values [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
+make (dictionary or dict or object or obj  ) dictionaryName = key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
+make (dictionary or dict or object or obj  ) dictionaryName = [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
 ``` 
 
 # Make Function
@@ -108,16 +108,23 @@ loop from 1 to 10 then prints "Hello World"
 
 loop while condition is true then prints "Hello World"
 
-loop item in listName then prints item
-                    or 
-for item in listName then prints item
+```
 
-loop key and value in dict_name then prints key and value
+## Loop List Array
+
+```python
+loop for item in listName then prints item
+                    or 
+loop listName for item then prints item
+```
+## Loop Dictionary or list  Array
+```python
+loop for key and value in dict_name then prints key and value
                     or
-for key, value in dict_name then prints key and value
+loop dict_name for key, value then prints key and value
 ```
 
 ## Normal code 
-
+```
 for custom code write \`\`\` Normal code \`\`\`
-
+```

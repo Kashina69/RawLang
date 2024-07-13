@@ -17,10 +17,32 @@ def make_tuple(tokens):
     return f'{variable_name} = ({values},)'
 
 def make_object(tokens):
-    # Generate code for creating a dictionary
+     # Extract the variable name (first token)
     variable_name = tokens[0]
-    key_value_pairs = ', '.join(tokens[2:])  # Assuming "make x dictionary key1: value1 key2: value2"
-    return f'{variable_name} = {{{key_value_pairs}}}'
+    
+    # Initialize an empty list to hold formatted key-value pairs
+    key_value_pairs = []
+    
+    # Iterate through the remaining tokens two at a time (key and value)
+    for i in range(2, len(tokens), 2):
+        key = tokens[i].rstrip(':')
+        value = tokens[i + 1]
+
+        # Check if value can be converted to an integer
+        try:
+            int(value)
+        except ValueError:
+            # If it cannot be converted, quote the value
+            value = f'"{value}"'
+
+        # Append the formatted key-value pair to the list
+        key_value_pairs.append(f"'{key}': {value}")
+    
+    # Join all key-value pairs with commas
+    key_value_pairs_str = ', '.join(key_value_pairs)
+    
+    # Return the formatted dictionary assignment statement
+    return f'{variable_name} = {{{key_value_pairs_str}}}'
 
 def make_variable(tokens):
     # Generate code for creating multiple variables

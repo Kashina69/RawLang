@@ -21,11 +21,9 @@ take input
 ```
 ## Variable declaration
 ``` python
-make variableName = 5, variableName2 = 10 and variableName3 = 15
-make variableName, variableName2 and variableName3 = 5, 10 and 15
-make variableName, variableName2 and variableName3 with values 5, 10 and 15
-make variableName which takes input 
-make variableName which takes number input with message "Give number "
+make variableName = 5 variableName2 = 10 variableName3 = 15
+make userInput which takes input with message "Enter your name:"
+make userNumber which takes number input with message "Give number:"
 ``` 
 
 ## Assign variable 
@@ -36,8 +34,8 @@ assign outputVariableName to variableName
 
 ## List or Array
 ``` python
-make (list or array or arr or lst) listName with values 10,15,20,30 and 35 . 
-make (list or array or arr or lst) listName = 10,15,20,30 and 35 .
+make (list or array or arr or lst) listName = 10 15 20 30 35 "name" age "class"
+
 ```
 
 ## Dictionary or Object

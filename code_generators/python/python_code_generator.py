@@ -14,7 +14,7 @@ def tokenizer(english_code):
     
     for line in lines:
         # Remove comments (assuming comments start with #)
-        line = re.split(r'#', line)[0].strip()
+        # line = re.split(r'#', line)[0].strip()
         
         # Split line into tokens based on whitespace
         tokens = token_pattern.split(line)
@@ -37,13 +37,13 @@ def convert_line_to_code(line):
 
     # Depending on the operation, generate corresponding Python code
     if operation == "make":
-        if line[2] in ["list", "array", "arr", "lst"]:
+        if line[1] in ["list", "array", "arr", "lst"]:
             return generator.make_array(line[2:])
-        elif line[2] == "set":
+        elif line[1] == "set":
             return generator.make_set(line[2:])
-        elif line[2] == "tuple":
+        elif line[1] == "tuple":
             return generator.make_tuple(line[2:])
-        elif line[2] in ["dictionary", "dict", "object", "obj"]:
+        elif line[1] in ["dictionary", "dict", "object", "obj"]:
             return generator.make_object(line[2:])
         else:
             return generator.make_variable(line[1:])
@@ -67,11 +67,25 @@ def convert_line_to_code(line):
         return f'print({arguments})'
 
     elif operation == "check":
-        condition = ' '.join(line[2:])
+        if line[1].lower() == "if":
+            condition = ' '.join(line[2:])
+        else:
+            condition = ' '.join(line[1:])
         return f'if {condition}:'
 
     elif operation in ["else", "otherwise"]:
-        return 'else:'
+        if len(line) > 1 and line[1].lower() == "check":
+            if len(line) > 2 and line[2].lower() == "if":
+                condition = ' '.join(line[3:])
+                return f'elif {condition}:'
+            else:
+                condition = ' '.join(line[2:])
+                return f'elif {condition}:'
+        if len(line) > 1 and line[1].lower() == "if":
+            condition = ' '.join(line[2:])
+            return f'elif {condition}:'
+        else:
+            return 'else:'
 
     elif operation == "loop":
         loop_variable = line[1]
@@ -81,6 +95,9 @@ def convert_line_to_code(line):
 
     elif operation == "return":
         return f'return {" ".join(line[1:])}'
+
+    elif operation[0] == "#":
+        return f'# {' '.join(line[1:])}'
 
     else:
         return f"What the hell you wrote {line[0]}"
@@ -96,7 +113,8 @@ def generate_python_code(english_code):
 
     for line in tokenized_code:
         generated_line = convert_line_to_code(line)
-
+        if line == []:
+            indent_level = 0
         # Adjust indent level based on the operation
         if generated_line.endswith(":"):
             generated_code += '    ' * indent_level + generated_line + '\n'
@@ -110,24 +128,56 @@ def generate_python_code(english_code):
             indent_level -= 1
         else:
             generated_code += '    ' * indent_level + generated_line + '\n'
+    # print(generated_code)
     return generated_code
 
 # Example usage
 english_code = """
-make variableName = 5 variableName2 = 10 variableName3 = 15
-make variableName which takes input with massage and argument 
-make variableName which takes number input with message "Give number"
+# Variable assignment
+make variableName = 5
+make variableName2 = 10
+make variableName3 = 15
 
-create func functionName with parameters parameter1 parameter2 parameter3 which 
-    prints parameter1 + parameter2 + parameter3
-    prints parameter1 - parameter2 - parameter3
-    prints parameter1 * parameter2 * parameter3
-    prints parameter1 / parameter2 / parameter3
-    prints parameter1 % parameter2 % parameter3
-    prints parameter1 ** parameter2 ** parameter3
-    prints parameter1 // parameter2 // parameter3
+make set setName = prince rawat ji 69 @ 
+make list listName = prince rawat ji 69 @ 
+make tuple tupleName = prince rawat ji 69 @ 
+
+make object people = name prince lastname rawat class 12
+
+loop list from 1 to 20
+print "Hello niggas"
+
+# Taking input with a message
+make userInput which takes input with message "Enter your name:"
+make userNumber which takes number input with message "Give number:"
+
+# Function definition
+create func calculate with parameters x y z which 
+    prints x + y + z
+    prints x - y - z
+    prints x * y * z
+    prints x / y / z
+    prints x % y % z
+    prints x ** y ** z
+    prints x // y // z
     return "all good"
 
-call functionName with arguments parameter1 parameter2 parameter3
+# Function call
+call calculate with arguments variableName variableName2 variableName3
+
+# Conditional statements
+check if variableName == 5
+    print "variableName is 5"
+
+otherwise check if variableName2 == 10
+    print "variableName2 is 10"
+
+otherwise if variableName3 == 15
+    print "variableName3 is 15"
+    
+otherwise
+    print "None of the conditions are met"
+
+# this is a buttifyl comment  
 """
-# generate_python_code(english_code, generated_code)
+generate_python_code(english_code)

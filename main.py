@@ -1,85 +1,75 @@
-import sys
 import os
-from code_generators.python.python_code_generator import generate_python_code
-from code_generators.javascript.javascript_code_generator import generate_javascript_code
+import sys
+from typing import Callable
+
 from code_generators.go_lang.go_lang_code_generator import generate_golang_code
+from code_generators.javascript.javascript_code_generator import generate_javascript_code
+from code_generators.python.python_code_generator import generate_python_code
 from code_generators.rust.rust_code_generator import generate_rust_code
 
 
-def checkProgrammingLanguage(first_line):
+SUPPORTED_LANGUAGES = {
+    "python": ("py", generate_python_code),
+    "javascript": ("js", generate_javascript_code),
+    "golang": ("go", generate_golang_code),
+    "rust": ("rs", generate_rust_code),
+}
+
+
+def check_programming_language(first_line: str) -> str | None:
     words = first_line.lower().split()
-    if words[0] == "language":
+    if len(words) >= 2 and words[0] == "language":
         lang = words[-1]
-        if lang in ["python", "javascript", "golang", "rust"]:
+        if lang in SUPPORTED_LANGUAGES:
             return lang
-    print("Broo at least tell the language")
-    print("This is how to do it")
-    print("Write:")
-    print("language should be python or javascript or go or rust")
-    print("On the top of the file")
+    print("Language not set correctly.")
+    print("Use one of these headers at the top of your .rl file:")
+    print("language should be python | javascript | golang | rust")
     return None
-            
-def code_generator(language, english_code):
-    code_generator_dict = {
-        "python": generate_python_code(english_code),
-        "javascript": generate_javascript_code(english_code),
-        "golang": generate_golang_code(english_code),
-        "rust": generate_rust_code(english_code)
-    }
-    return code_generator_dict[language]
-    
-def check_file_extension(language):
-    file_extension_dict ={
-        "python": "py",
-        "javascript": "js",
-        "golang": "go",
-        "rust": "rs"
-    }
-    return file_extension_dict[language]
-
-def write_in_file(generated_code,file_extension,input_filename):
-# Create a directory to store generated code if it doesn't exist
-        output_directory = "generated_code"
-        if not os.path.exists(output_directory):
-            os.makedirs(output_directory)
-
-# Split the input filename and extension
-        filename, _ = os.path.splitext(input_filename)
-# Concatenate the output filename with the proper file extension
-        output_filename = os.path.join(output_directory, filename + "." + file_extension)
-        with open(output_filename, 'w') as file:
-            file.write(generated_code)
-        print("Code generated successfully and saved in", output_filename)
 
 
+def generate_code(language: str, english_code: str) -> str:
+    _, generator = SUPPORTED_LANGUAGES[language]
+    return generator(english_code)
 
-def main():
-    # Check if filename is provided as command-line argument
+
+def write_in_file(generated_code: str, file_extension: str, input_filename: str) -> str:
+    output_directory = "generated_code"
+    os.makedirs(output_directory, exist_ok=True)
+
+    filename = os.path.splitext(os.path.basename(input_filename))[0]
+    output_filename = os.path.join(output_directory, f"{filename}.{file_extension}")
+
+    with open(output_filename, "w", encoding="utf-8") as file:
+        file.write(generated_code)
+
+    return output_filename
+
+
+def main() -> None:
     if len(sys.argv) != 2:
-        print("Bro atleast give a file to work on")
+        print("Usage: python main.py <rawlang_file>")
         return
+
     input_filename = sys.argv[1]
     try:
-        with open(input_filename, 'r') as file:
-# check programming language
+        with open(input_filename, "r", encoding="utf-8") as file:
             first_line = file.readline()
-            language = checkProgrammingLanguage(first_line)
-            if language:
-                print("Programming language set to:", language)
-# read english code
-                english_code = file.read()
-                generated_code = code_generator(language, english_code)
-                file_extension = check_file_extension(language)
-# write code in file 
-                write_in_file(generated_code, file_extension, input_filename)
-            else:
+            language = check_programming_language(first_line)
+            if not language:
                 return
+
+            english_code = file.read()
+            generated_code = generate_code(language, english_code)
+            file_extension, _ = SUPPORTED_LANGUAGES[language]
+            output_filename = write_in_file(generated_code, file_extension, input_filename)
+            print(f"Programming language set to: {language}")
+            print(f"Code generated successfully and saved in {output_filename}")
     except FileNotFoundError:
-        print("File not found:", input_filename)
-    except Exception as e:
-        print("An error occurred:", str(e))
+        print(f"File not found: {input_filename}")
+    except Exception as error:  # noqa: BLE001
+        print(f"An error occurred: {error}")
+
 
 if __name__ == "__main__":
     main()
-
-

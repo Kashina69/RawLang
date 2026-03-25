@@ -1,128 +1,94 @@
-# RawLang 
+# RawLang Syntax and Keywords
 
-### Use . go out of the function or loop or condition scope 
-### For next line just use next line 
+## Header
 
-## Output programming language
-
+```rawlang
+language should be python
 ```
-language should be python 
-language should be javascript
-language should be golang
-language should be rust 
+
+Supported targets:
+- python
+- javascript
+- golang
+- rust
+
+## Core statements
+
+### Variables
+```rawlang
+make x = 10
+assign 42 to x
 ```
+
+### Collections
+```rawlang
+make list nums = 1 2 3
+make set tags = "a" "b"
+make tuple pair = 1 2
+make object user = name "Raw" age 19
+```
+
+### Print
+```rawlang
+print "hello"
+prints x
+```
+
+### Function
+```rawlang
+create function add with parameters x, y which
+return x + y
+.
+```
+
+### Call
+```rawlang
+call add with arguments 10, 20
+```
+
+### Condition
+```rawlang
+check if x > 10
+print "big"
+otherwise if x == 10
+print "equal"
+otherwise
+print "small"
+.
+```
+
+### Loops
+```rawlang
+loop i from 0 to 5
+print i
+.
+
+loop for item in nums
+print item
+.
+```
+
 ## Comments
-```
-// comment
-```
-## Take input
-```python 
-take input
-```
-## Variable declaration
-``` python
-make variableName = 5 variableName2 = 10 variableName3 = 15
-make userInput which takes input with message "Enter your name:"
-make userNumber which takes number input with message "Give number:"
-``` 
 
-## Assign variable 
-``` python
-assign 5 to variableName
-assign outputVariableName to variableName
+```rawlang
+# python style
+// c style
 ```
 
-## List or Array
-``` python
-make (list or array or arr or lst) listName = 10 15 20 30 35 "name" age "class"
+## Manual code blocks
 
-```
+Use fenced blocks for direct code passthrough:
 
-## Dictionary or Object
-
-``` python
-make (dictionary or dict or object or obj  ) dictionaryName with values key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
-make (dictionary or dict or object or obj  ) dictionaryName with values [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
-make (dictionary or dict or object or obj  ) dictionaryName = key1 = value1, key2 = value2, key3 = value3 and key4 = value4 .
-make (dictionary or dict or object or obj  ) dictionaryName = [key1 = value1, key2 = value2, key3 = value3 and key4 = value4] .
-``` 
-
-# Make Function
-``` python
-create (function or fun or func) functionName with (parameters or parms) parameter1, parameter2 and parameter3 which 
-    prints parameter1 + parameter2 + parameter3
-    prints parameter1 - parameter2 - parameter3
-    prints parameter1 * parameter2 * parameter3
-    prints parameter1 / parameter2 / parameter3
-    prints parameter1 % parameter2 % parameter3
-    prints parameter1 ** parameter2 ** parameter3
-    prints parameter1 // parameter2 // parameter3
-    return "all good"
-
-                                # or 
-
-create functionName with parameter1, parameter2 and parameter3 as (parameters or parms) which 
-    prints parameter1
-    prints parameter2
-    prints parameter3
-
-```
-
-# Call Function
-``` python
-call functionName with (arguments, args) argument1, argument2 and argument3 then assign the output to outputVariableName
-
-make variableName which call functionName with argument1, argument2 and argument3 (arguments, args) 
-
-functionName(argument1, argument2 and argument3)
-```
-
-# Condition
-``` python
-create functionName with parms num1 and num2 which checks if num1 (is greater than or > )num2 then prints "num1 is greater than num2"
-(else or otherwise) if num1 (is or == ) num2 then prints "num1 is equal to num2"
-(else or otherwise) if num1 (is not or != ) num2 then prints "num1 is not equal to num2"
-(else or otherwise) prints "Can't tell"
-```
-- ## Condition keyword
+````rawlang
 ```python
-condition_words_dict = {
-    "is": "==",
-    "else": "else",
-    "and": "and",
-    "or": "or",
-    "not": "not",
-    "is not": "!=",
-    "greater than": ">",
-    "less than": "<",
-    "greater than equal to": ">=",
-    "less than equal to": "<=",
-}
+print("real python code")
 ```
+````
 
-## Loops
-``` python
-loop from 1 to 10 then prints "Hello World"
+Accepted tags:
+- target-specific: `python`, `javascript`, `golang`, `rust`
+- generic passthrough: no tag, `code`, `real code`, `manual`
 
-loop while condition is true then prints "Hello World"
+## Scope closing
 
-```
-
-## Loop List Array
-
-```python
-loop for item in listName then prints item
-                    or 
-loop listName for item then prints item
-```
-## Loop Dictionary or list  Array
-```python
-loop for key and value in dict_name then prints key and value
-                    or
-loop dict_name for key, value then prints key and value
-```
-
-## Normal code 
-```
-for custom code write \`\`\` Normal code \`\`\`
-```
+Use a single line with `.` to close a block when needed.
